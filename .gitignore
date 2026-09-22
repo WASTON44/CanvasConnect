@@ -1,0 +1,65 @@
+# Local credentials and environment overrides
+.env
+.env.*
+!.env.example
+# Defense in depth for temporary files created by early development versions.
+..env.*.tmp
+*.pem
+*.key
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python bytecode and caches
+__pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+.Python
+
+# Test, type-checking, and coverage output
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Packaging and build output
+build/
+dist/
+downloads/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Canvas VLE Manager local/user data
+backups/
+Active/
+quiz_drafts/
+logs/
+user_data/
+*.log
+
+# Local planning material and private build briefs. These can contain teaching
+# content, course identifiers, and institution-specific notes.
+Full Codex build prompt*.md
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

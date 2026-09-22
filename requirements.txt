@@ -1,0 +1,5 @@
+# Runtime dependencies
+requests>=2.31,<3
+
+# Test dependency (the test suite never requires live Canvas access)
+pytest>=8,<10

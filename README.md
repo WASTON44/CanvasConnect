@@ -434,4 +434,5 @@ Canvas VLE Manager is available under the
 [Canvas VLE Manager Non-Commercial Licence](LICENSE). Non-commercial use and
 derivative works are permitted under its terms. Any commercial use of this
 software or a derivative work requires the copyright holder's prior written
-permission.
+permission. The copyright holder and owner is
+[WASTON44](https://github.com/WASTON44).

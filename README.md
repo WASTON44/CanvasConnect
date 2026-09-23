@@ -430,4 +430,8 @@ Version 0.1.
 
 ## License
 
-Canvas VLE Manager is available under the [MIT License](LICENSE).
+Canvas VLE Manager is available under the
+[Canvas VLE Manager Non-Commercial Licence](LICENSE). Non-commercial use and
+derivative works are permitted under its terms. Any commercial use of this
+software or a derivative work requires the copyright holder's prior written
+permission.

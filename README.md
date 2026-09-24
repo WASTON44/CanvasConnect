@@ -25,11 +25,16 @@ Version 0.1 can:
 - calculate SHA-256 checksums and skip unchanged files on later runs;
 - retain old local files if they disappear from the latest Canvas inventory;
 - checkpoint file metadata so an interrupted backup can be resumed; and
-- create per-course Markdown/JSON content indexes and global course indexes.
+- create per-course Markdown/JSON content indexes and global course indexes;
+  and
+- after a separate, explicitly approved review, deploy a local `Active`
+  working copy directly to its matched Canvas course.
 
-Version 0.1 is **read only against Canvas**. Its API client allows only `GET`
-and `HEAD`. Attempts to use `POST`, `PUT`, `PATCH`, or `DELETE` are blocked
-locally before a request can leave the computer.
+Archiving, course discovery, and backup remain **read only against Canvas**.
+Their reusable `CanvasClient` allows only `GET` and `HEAD`; attempts to use
+`POST`, `PUT`, `PATCH`, or `DELETE` through it are blocked locally before a
+request can leave the computer. The separately guarded deployment command is
+the sole exception and is described below.
 
 ## Requirements
 
@@ -311,7 +316,7 @@ lecturer without retrieving additional people/enrolment data. Version 0.1
 therefore saves accessible topic definitions, strips author and reply data, and
 never calls discussion-entry endpoints. Review an archive before sharing it.
 
-## Read-only safety
+## Read-only archive safety
 
 The safety boundary is enforced in the reusable `CanvasClient`, not just in the
 CLI. Only `GET` and `HEAD` requests are accepted. File transfers use normal
@@ -322,6 +327,50 @@ remains enabled.
 Read-only API access can still expose sensitive course material and appears in
 Canvas logs like other account activity. Use only an account and courses you
 are authorised to access.
+
+## Approved direct deployment from `Active`
+
+`scripts/upload_active_courses.py` uploads the local files and content in an
+`Active` course working copy directly to the Canvas course ID encoded in that
+folder name. It does not use Canvas Course Copy, Content Migrations, or a
+different Canvas course as a content source.
+
+This is a guarded write path. Before using it, follow the complete review and
+approval workflow in [`AGENTS.md`](AGENTS.md): show the user the exact target,
+content, removals, and publishing states; obtain their explicit approval; and
+report the Canvas read-back afterwards. The command's confirmation phrase is a
+second safety check, not a substitute for that review.
+
+Start with its local-only preview:
+
+```text
+python scripts/upload_active_courses.py
+```
+
+After that exact preview has been approved, upload the selected course:
+
+```text
+python scripts/upload_active_courses.py --course NTO1012 --apply --confirm "UPLOAD APPROVED ACTIVE COURSES"
+```
+
+The deployed Canvas course remains unpublished. The command excludes archived
+announcements, publishes only the first module and its non-assessment items,
+and keeps later modules, assignments, Classic Quizzes, and New Quizzes
+unpublished. Files outside the first module are hidden and locked. A report is
+written to the Git-ignored `Active/deployment_reports/` directory.
+
+If an upload was interrupted, resume only that one course after checking its
+report:
+
+```text
+python scripts/upload_active_courses.py --course NTO1012 --resume --apply --confirm "UPLOAD APPROVED ACTIVE COURSES"
+```
+
+Resume matches existing content strictly by the archived identifiers, names,
+locations, and positions it can verify. It stops instead of guessing if it
+finds unrelated or ambiguous target content. It also stops before changing a
+course if a New Quiz embeds a media file that is not present locally; do not
+silently remove or replace that media.
 
 ## Command reference
 
@@ -339,6 +388,8 @@ python scripts/backup_courses.py --course 12345 23456
 python scripts/backup_courses.py --term "Autumn 2026"
 python scripts/backup_courses.py --course 12345 --dry-run
 python scripts/backup_courses.py --course 12345 --resume
+python scripts/upload_active_courses.py
+python scripts/upload_active_courses.py --course NTO1012 --apply --confirm "UPLOAD APPROVED ACTIVE COURSES"
 python -m pytest
 ```
 
@@ -356,6 +407,7 @@ Run commands from the repository root.
 |-- tests/                   Offline test suite
 |-- user_data/               Local discovery data (created, Git-ignored)
 |-- backups/                 Local archives (created, Git-ignored)
+|-- Active/                  Local working copies and deployment reports (Git-ignored)
 `-- logs/                    Timestamped logs (created, Git-ignored)
 ```
 
@@ -423,10 +475,10 @@ Changing the machine-wide execution policy is not required.
 
 ## Future roadmap
 
-Potential Version 0.2+ work includes OAuth, archive comparison reports, offline
-link reconstruction, an optional interface, and deliberately previewed and
-approved Canvas write workflows. None of those write capabilities exist in
-Version 0.1.
+Potential future work includes OAuth, archive comparison reports, offline link
+reconstruction, and an optional interface. Any future Canvas write workflow
+must preserve the explicit review, approval, and post-change verification
+requirements.
 
 ## License
 

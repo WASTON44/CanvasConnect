@@ -22,8 +22,12 @@ git status
 Review every staged file. If a token may have been committed or shared, revoke
 it in Canvas immediately and remove it from the Git history before publishing.
 
-## Supported boundary
+## Canvas access boundary
 
-Version 0.1 is read-only against Canvas. The client blocks write methods before
-they are sent. This is a safety control, not a substitute for protecting local
+The archive `CanvasClient` is permanently read-only: it blocks write methods
+before they are sent. The optional direct-deployment command uses a distinct,
+approval-gated write client and may only be run after the exact live changes
+have been reviewed and explicitly approved under [`AGENTS.md`](AGENTS.md).
+It uploads only from local `Active` working copies and records a local
+deployment report. These controls are not substitutes for protecting local
 course material and credentials.

@@ -14,8 +14,11 @@ Thank you for helping improve Canvas VLE Manager.
   Authorization headers.
 - Do not add course archives, active working copies, quiz drafts, student data,
   or production teaching material to the repository.
-- Preserve Version 0.1's read-only Canvas boundary. New code must not send
-  `POST`, `PUT`, `PATCH`, or `DELETE` requests through `CanvasClient`.
+- Preserve `CanvasClient`'s read-only archive boundary. New code must not send
+  `POST`, `PUT`, `PATCH`, or `DELETE` requests through it. Any approved
+  deployment code must remain separate, default to dry-run, require the
+  guarded confirmation, and follow the review/approval/reporting rules in
+  `AGENTS.md`.
 - Add or update offline tests for behaviour changes. Tests must not require a
   live Canvas account or internet connection.
 - Keep user-facing documentation accurate, especially privacy and data-handling

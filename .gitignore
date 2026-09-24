@@ -35,6 +35,7 @@ coverage.xml
 build/
 dist/
 downloads/
+output/
 *.egg-info/
 .eggs/
 pip-wheel-metadata/

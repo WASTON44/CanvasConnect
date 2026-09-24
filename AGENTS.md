@@ -2,9 +2,10 @@
 
 ## Scope and safety boundary
 
-This repository is designed for local, read-only Canvas archiving. Keep Canvas
-tokens, course exports, student data, signed URLs, and local configuration out
-of source control and out of chat.
+This repository is designed for local, read-only Canvas archiving with a
+separate, approval-gated direct deployment path for local `Active` working
+copies. Keep Canvas tokens, course exports, student data, signed URLs, and
+local configuration out of source control and out of chat.
 
 Do not make a live Canvas change unless the user has explicitly asked for the
 specific change and has approved the final proposed upload as described below.
